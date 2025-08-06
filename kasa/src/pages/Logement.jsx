@@ -72,13 +72,11 @@ function Logement() {
       <div key={e.id}>
         <div className="logement-slider">
           <img src={e.pictures[index]} alt={e.title} />
-          {/* Numérotation (si plusieurs images) */}
           {e.pictures.length > 1 && (
             <div className="slider-count">
               {index + 1}/{e.pictures.length}
             </div>
           )}
-          {/* Flèches seulement si plusieurs images */}
           {e.pictures.length > 1 && (
             <>
               <button className="arrowLeft" onClick={Left}>
@@ -92,29 +90,33 @@ function Logement() {
         </div>
 
         <div className="informations-container">
-          <div className="informations-container-top">
-            <div className="informations-title">
+          {/* Bloc global header (titre + tags + hôte + étoiles) */}
+          <div className="logement-header">
+            <div className="left">
               <h1>{e.title}</h1>
               <h2>{e.location}</h2>
+              <div className="tags-container">
+                {e.tags.map((tag, index) => (
+                  <p key={index}>{tag}</p>
+                ))}
+              </div>
             </div>
-            <div className="informations-name">
-              <h2>
-                {e.host.name.split(" ")[0]}
-                <br />
-                {e.host.name.split(" ")[1]}
-              </h2>
-              <img src={e.host.picture} alt={`Photo de ${e.host.name}`} />
+
+            <div className="right">
+              <div className="host-info">
+                <h2>
+                  {e.host.name.split(" ")[0]}
+                  <br />
+                  {e.host.name.split(" ")[1]}
+                </h2>
+                <img src={e.host.picture} alt={`Photo de ${e.host.name}`} />
+              </div>
+              <div className="stars">{Rating()}</div>
             </div>
           </div>
-          <div className="informations-container-middle">
-            <div className="tags-container">
-              {e.tags.map((tag, index) => (
-                <p key={index}>{tag}</p>
-              ))}
-            </div>
-            <div className="stars">{Rating()}</div>
-          </div>
-          <div className="informations-container-bottom">
+
+          {/* Collapse Description + Équipements */}
+          <div className="collapse-block">
             <Collapse title="Description">
               <p>{e.description}</p>
             </Collapse>
